@@ -1,0 +1,10 @@
+1. browser to server: Get from fullstack-exampleapp.herokuapp.com, notes.html
+2. server returns to browser: spa.html
+3. browser to server: Get from fullstack-exampleapp.herokuapp.com, main.css
+4. server returns to browser: main.css
+5. browser to server: Get from fullstack-exampleapp.herokuapp.com, main.js
+6. server returns to browser: spa.js
+7. browser to server: Get from fullstack-exampleapp.herokuapp.com, data.json
+8. server returns to browser and to main.js notes array: data.json
+9. browser to server: Post to fullstack-exampleapp.herokuapp.com, data.json. Post is also added to spa.js notes array
+10. spa.js updates spa.html with the updated notes array
