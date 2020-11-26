@@ -39,9 +39,9 @@ const styles = StyleSheet.create({
 const SignInForm = ({onSubmit}) => {
     return (
         <View style={styles.formContainer}>
-            <FormikTextInput style={styles.input} name='username' />
-            <FormikTextInput style={styles.input} name='password' secureTextEntry />
-            <TouchableWithoutFeedback onPress={onSubmit}>
+            <FormikTextInput testIDProp='username' style={styles.input} name='username' />
+            <FormikTextInput testIDProp='password' style={styles.input} name='password' secureTextEntry />
+            <TouchableWithoutFeedback testID='submitButton' onPress={onSubmit}>
                 <Text style={styles.submitBtn} fontSize='subheader' fontWeight='bold'>Sign in</Text>
             </TouchableWithoutFeedback>
         </View>
@@ -73,6 +73,18 @@ const SignIn = () => {
         }
     };
 
+    return (
+        <Formik
+            initialValues={initialValues}
+            onSubmit={onSubmit}
+            validationSchema={validationSchema}
+        >
+            {({handleSubmit}) => <SignInForm onSubmit={handleSubmit} />}
+        </Formik>
+    );
+};
+
+export const TestSignIn = ({onSubmit}) => {
     return (
         <Formik
             initialValues={initialValues}

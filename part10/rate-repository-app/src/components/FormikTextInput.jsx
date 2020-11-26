@@ -21,6 +21,7 @@ const FormikTextInput = ({name, ...props}) => {
     return (
         <>
             <TextInput
+                testID={props.testIDProp}
                 onChangeText={value => helpers.setValue(value)}
                 placeholder={name}
                 onBlur={() => helpers.setTouched(true)}

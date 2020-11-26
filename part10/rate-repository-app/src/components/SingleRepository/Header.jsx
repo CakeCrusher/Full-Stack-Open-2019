@@ -1,14 +1,14 @@
 import React from 'react';
-import {View,Image,StyleSheet, TouchableWithoutFeedback, TouchableOpacity} from 'react-native';
-import theme from '../theme';
-import Text from './Text'
+import {View,Image,StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import theme from '../../theme';
+import Text from '../Text'
 import {useQuery} from '@apollo/react-hooks'
-import {GET_REPOSITORY} from '../graphql/queries'
-import {useHistory, Link} from 'react-router-native'
+import {GET_REPOSITORY} from '../../graphql/queries'
+import {useParams} from 'react-router-native'
+import {openURL} from 'expo-linking'
+import {openBrowserAsync} from 'expo-web-browser'
 
-const RepositoryItem = (props) => {
-    let history = props.history
-    let item = props.item
+const Header = ({item}) => {
 
     const styles = StyleSheet.create({
         rootContainer: {
@@ -42,10 +42,25 @@ const RepositoryItem = (props) => {
         },
         footerContaier: {
             flexDirection: 'row',
-            justifyContent: 'space-evenly'
+            justifyContent: 'space-evenly',
+            marginBottom: 10
         },
         footerItem: {
             alignItems: 'center'
+        },
+        gitHubLink: {
+            borderRadius: 5,
+            width: '90%',
+            alignSelf: 'center',
+            textAlign: 'center',
+            padding: 10,
+            marginBottom: 10,
+            backgroundColor: theme.colors.primary,
+            color: 'white'
+        },
+        separator: {
+            height: 10,
+            backgroundColor: 'lightgray'
         }
     });
 
@@ -57,13 +72,13 @@ const RepositoryItem = (props) => {
         } else return num;
     };
 
-    const onPress = () => {
-        console.log('heading to: ', `/repository/${item.id}`);
-        history.push(`/repository/${item.id}`)
+    const onGitHubPress = () => {
+        console.log('opening: ', item.url);
+        openBrowserAsync(item.url);
+        // openURL(item.url);
     }
 
     return (
-        <TouchableOpacity onPress={onPress} >
         <View style={styles.rootContainer}>
             <View style={styles.headerContainer}>
                 <Image style={styles.headerImage} source={{uri: item.ownerAvatarUrl}} />
@@ -93,9 +108,12 @@ const RepositoryItem = (props) => {
                     <Text color='textSecondary'>Rating</Text>
                 </View>
             </View>
+            <TouchableWithoutFeedback onPress={onGitHubPress} >
+                <Text style={styles.gitHubLink} fontSize='subheader' fontWeight='bold'>Open in GitHub</Text>
+            </TouchableWithoutFeedback>
+            <View style={styles.separator} />
         </View>
-        </TouchableOpacity>
     );
 };
 
-export default RepositoryItem;
+export default Header;
